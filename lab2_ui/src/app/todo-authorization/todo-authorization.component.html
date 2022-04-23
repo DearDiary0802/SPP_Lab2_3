@@ -1,0 +1,37 @@
+<div class="container">
+
+  <mat-card>
+    <p>Sing in:</p>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Login</mat-label>
+      <input matInput [(ngModel)]="signInLogin">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput [(ngModel)]="signInPassword">
+    </mat-form-field>
+
+    <button mat-button (click)="signIn()">Sign in</button>
+  </mat-card>
+
+  <p>or</p>
+
+  <mat-card>
+    <p>Sing up: </p>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Login</mat-label>
+      <input matInput [(ngModel)]="signUpLogin">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput [(ngModel)]="signUpPassword">
+    </mat-form-field>
+
+    <button mat-button (click)="signUp()">Sign up</button>
+  </mat-card>
+
+</div>

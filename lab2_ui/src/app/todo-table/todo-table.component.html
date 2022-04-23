@@ -1,0 +1,53 @@
+<div class="mat-elevation-z8">
+  <mat-spinner *ngIf="!data"></mat-spinner>
+  <table mat-table [dataSource]="tasks" class="table table-hover" matSort>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell mat-sort-header sortActionDescription="Sort by name" *matHeaderCellDef> Name</th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description</th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status</th>
+      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="deadline">
+      <th mat-header-cell mat-sort-header sortActionDescription="Sort by deadline" *matHeaderCellDef> Deadline</th>
+      <td mat-cell *matCellDef="let element"> {{element.deadline | date: 'EEEE, MMMM d, y, HH:mm'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="file">
+      <th mat-header-cell *matHeaderCellDef> File</th>
+      <td mat-cell *matCellDef="let element">
+        <a *ngIf="element?.file?.filename; else noFile"
+           (click)="downloadFile({id: element.id, fileName: element?.file?.filename})">{{element?.file?.filename}}</a>
+        <ng-template #noFile>No File</ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="settings">
+      <th mat-header-cell *matHeaderCellDef> Settings</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button color="warn" (click)="deleteTask(element.id)" *ngIf="element.id !== -1">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-button color="primary" *ngIf="checkStatus(element)" (click)="completeTask(element.id)">
+          <mat-icon>done</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+  <mat-paginator [length]="data.length" [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons aria-label="Select page">
+  </mat-paginator>
+</div>

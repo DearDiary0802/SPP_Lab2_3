@@ -1,0 +1,44 @@
+<p>
+  <mat-toolbar color="primary">
+    <span>ToDo</span>
+    <span class="example-spacer"></span>
+    <span>REST API + SPA</span>
+  </mat-toolbar>
+</p>
+
+<div class="container">
+  <ng-container *ngIf="isAuthorized; else authorization">
+    <app-add-task (onTaskAdd)="addTask($event)"
+    ></app-add-task>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Filter by status</mat-label>
+      <mat-select (valueChange)="getFilteredTasks($event)">
+        <mat-option [value]="null">
+          Show all
+        </mat-option>
+        <mat-option [value]="TaskStatus.IN_PROGRESS">
+          {{TaskStatus.IN_PROGRESS}}
+        </mat-option>
+        <mat-option [value]="TaskStatus.DONE">
+          {{TaskStatus.DONE}}
+        </mat-option>
+        <mat-option [value]="TaskStatus.EXPIRED">
+          {{TaskStatus.EXPIRED}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <app-todo-table [data]="tasks"
+                    (onCompleteTask)="completeTask($event)"
+                    (onDeleteTask)="deleteTask($event)"
+                    (onDownloadTask)="downloadFile($event)"
+    ></app-todo-table>
+  </ng-container>
+
+  <ng-template #authorization>
+    <app-todo-authorization (onSignIn)="signIn($event)"
+                            (onSignUp)="signUp($event)"
+    ></app-todo-authorization>
+  </ng-template>
+</div>
